@@ -1,0 +1,7 @@
+# Sample Entity
+entities.KyleMod/SampleEntity.placements.name.normal=Sample Entity
+entities.KyleMod/SampleEntity.attributes.description.sampleProperty=A sample property for your entity.
+
+# Sample Trigger
+triggers.KyleMod/SampleTrigger.placements.name.normal=Sample Trigger
+triggers.KyleMod/SampleTrigger.attributes.description.sampleProperty=A sample property for your trigger.
