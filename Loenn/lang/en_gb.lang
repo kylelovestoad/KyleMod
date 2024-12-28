@@ -1,6 +1,8 @@
-# Sample Entity
-entities.KyleMod/SampleEntity.placements.name.normal=Sample Entity
-entities.KyleMod/SampleEntity.attributes.description.sampleProperty=A sample property for your entity.
+# Magnet Block
+entities.KyleMod/MagneticBlock.placements.name.normal=Magnetic Block
+
+# Attracted Block
+entities.KyleMod/AttractedBlock.placements.name.normal=Attracted Block
 
 # Sample Trigger
 triggers.KyleMod/SampleTrigger.placements.name.normal=Sample Trigger
