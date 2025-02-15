@@ -10,51 +10,29 @@ namespace Celeste.Mod.KyleMod.Entities;
 [Tracked]
 public class Magnetic : Component
 {
-    public Collider MagneticField;
-
-    public Action<Attractable> InField;
-
+    public readonly Collider MagneticField;
     
-    public bool IsAffecting;
-    
-    public HashSet<Attractable> Affected = new();
-
-    public int Radius;
-
-    public Magnetic(int radius) : base(true, false)
+    public Magnetic(Collider magneticField = null) : base(true, true)
     {
-        Radius = radius;
-        MagneticField = new Circle(radius);
-        IsAffecting = false;
+        MagneticField = magneticField;
     }
 
-    public void TryAffectObjects()
+    public void CheckAgainstColliders()
     {
-        foreach (var attractable in Scene.Tracker.GetComponents<Attractable>().Cast<Attractable>())
+        foreach (var component in Scene.Tracker.GetComponents<MagneticCollider>().Cast<MagneticCollider>())
         {
-            if (CheckInsideField(attractable))
+            // When it is colliding with this magnetic field, then add this to the object's magnet set
+            if (component.CheckInField(this))
             {
-                // Adds to magnet set if it isn't already there
-                Affected.Add(attractable);
-                InField?.Invoke(attractable);
+                component.Magnets.Add(this);
+                component.OnCollide(this);
             }
             else
             {
-                // Magnet is no longer there, so remove it from magnets set
-                Affected.Remove(attractable);
+                // Attempt to remove the magnet when not colliding if it is in the magnet set
+                component.Magnets.Remove(this);
             }
-
-            // When there are no magnets affecting the attractable object, the 
-            IsAffecting = Affected.Count == 0;
         }
-    }
-    
-    private bool CheckInsideField(Attractable attractable)
-    {
-        var collider = Entity.Collider;
-        var isColliding = !attractable.Entity.CollideCheck(Entity);
-        Entity.Collider = collider;
-        return isColliding;
     }
     
     public override void DebugRender(Camera camera)
